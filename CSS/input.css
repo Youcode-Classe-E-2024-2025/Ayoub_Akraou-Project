@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	@apply text-white;
+}
+
+body {
+	@apply bg-black;
+}
+
+i {
+	@apply hover:scale-105 transition-transform active:scale-100;
+}
+
+button {
+	@apply active:scale-90 transition-transform;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+	display: none; /* Chrome, Safari, and Edge */
+}
+.scroll-hidden {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+.fade-in {
+	animation: fadeIn 0.3s linear;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
