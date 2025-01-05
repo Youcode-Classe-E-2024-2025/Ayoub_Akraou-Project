@@ -18,7 +18,7 @@
          <select class="select-project capitalize rounded-full py-0.5 sm:py-1 text-xl text-white border-2 border-white border-solid bg-gradient-to-r from-[#243B55] to-[#141E30] font-medium [&>*]:text-black text-center">
             <option value="">-- select project --</option>
             <?php foreach ($projects as $project) : ?>
-               <option value="<?= $project['id'] ?>"><?= $project['name'] ?></option>
+               <option value="<?= $project['id'] ?>" <?= isset($_SESSION['project_id']) && $_SESSION['project_id'] == $project['id'] ? 'selected' : '' ?>><?= $project['name'] ?></option>
             <?php endforeach ?>
          </select>
       </div>
