@@ -20,7 +20,7 @@ class Database
          $stmt->execute($params);
          return $stmt;
       } catch (\Throwable $th) {
-         dd($th->getMessage());
+         throw new Exception($th->getMessage());
       }
    }
 
