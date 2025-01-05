@@ -10,7 +10,7 @@ CREATE TABLE
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
-        role ENUM ('project manager', 'regular') DEFAULT 'regular',
+        role ENUM ('manager', 'regular') DEFAULT 'regular',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
@@ -19,13 +19,14 @@ CREATE TABLE
 CREATE TABLE
     projects (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
+        name VARCHAR(255) NOT NULL UNIQUE,
         description TEXT,
         visibility ENUM ('public', 'private') NOT NULL,
-        admin_id INT NOT NULL,
+        due_date DATE NOT NULL,
+        manager_id INT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY (admin_id) REFERENCES users (id) ON DELETE CASCADE
+        FOREIGN KEY (manager_id) REFERENCES users (id) ON DELETE CASCADE
     );
 
 -- Table: categories
@@ -52,7 +53,7 @@ CREATE TABLE
         id INT AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         description TEXT,
-        status ENUM ('pending', 'in progress', 'completed') DEFAULT 'pending',
+        status ENUM ('todo', 'doing', 'done') DEFAULT 'todo',
         due_date DATE,
         project_id INT NOT NULL,
         category_id INT,
@@ -97,44 +98,52 @@ INSERT INTO
     users (name, email, password, role)
 VALUES
     (
-        'Alice Johnson',
-        'alice@example.com',
-        'password123',
-        'project manager'
+        'ayoub akraou',
+        'ayoubakraou@gmail.com',
+        '$2y$10$CsIw8C6Chum3RJzYaYbKG.mXGpOQH3qKcN8a9R2NbNWFwSVl8xe0m', -- 00000000
+        'manager'
     ),
     (
-        'Bob Smith',
-        'bob@example.com',
-        'password123',
+        'akram mowahidi',
+        'akram@example.com',
+        '$2y$10$0u8sRBwOwCXYjMkpislirudw1GWbFzkhKR2AAiNSlaZuQawTqrV1m', -- 11111111
         'regular'
     ),
     (
-        'Charlie Brown',
-        'charlie@example.com',
-        'password123',
+        'karim el korchi',
+        'karim@example.com',
+        '$2y$10$0u8sRBwOwCXYjMkpislirudw1GWbFzkhKR2AAiNSlaZuQawTqrV1m', -- 11111111
         'regular'
     ),
     (
-        'Diana Prince',
-        'diana@example.com',
-        'password123',
-        'project manager'
+        'mohamed nadir',
+        'mohamed@example.com',
+        '$2y$10$0u8sRBwOwCXYjMkpislirudw1GWbFzkhKR2AAiNSlaZuQawTqrV1m', -- 11111111
+        'regular'
     );
 
 -- Insert fake data into projects
 INSERT INTO
-    projects (name, description, visibility, admin_id)
+    projects (
+        name,
+        description,
+        visibility,
+        due_date,
+        manager_id
+    )
 VALUES
     (
         'Website Redesign',
         'Redesign the company website.',
         'private',
+        '2024-03-01',
         1
     ),
     (
         'Mobile App Development',
         'Develop a new mobile application.',
         'public',
+        '2024-04-10',
         4
     );
 
@@ -168,7 +177,7 @@ VALUES
     (
         'Create Wireframes',
         'Design wireframes for the new website.',
-        'in progress',
+        'doing',
         '2025-01-15',
         1,
         2
@@ -176,7 +185,7 @@ VALUES
     (
         'Develop API',
         'Build the backend API for the mobile app.',
-        'pending',
+        'done',
         '2025-02-01',
         2,
         1
@@ -184,7 +193,7 @@ VALUES
     (
         'Write Test Cases',
         'Prepare test cases for the application.',
-        'pending',
+        'todo',
         '2025-01-20',
         2,
         3
@@ -192,7 +201,7 @@ VALUES
     (
         'Setup Database',
         'Design and implement the database schema.',
-        'in progress',
+        'done',
         '2025-01-25',
         1,
         1
@@ -200,7 +209,7 @@ VALUES
     (
         'Frontend Implementation',
         'Create responsive layouts for the application.',
-        'pending',
+        'done',
         '2025-01-30',
         2,
         2
@@ -208,7 +217,7 @@ VALUES
     (
         'Performance Testing',
         'Analyze and improve the apps performance.',
-        'pending',
+        'todo',
         '2025-02-10',
         2,
         3
@@ -216,7 +225,7 @@ VALUES
     (
         'Fix UI Bugs',
         'Resolve UI-related issues found during testing.',
-        'pending',
+        'doing',
         '2025-01-22',
         1,
         2
