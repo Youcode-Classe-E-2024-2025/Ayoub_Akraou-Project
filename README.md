@@ -5,15 +5,15 @@ TaskFlow est une application de gestion de tâches Kanban qui permet aux équipe
 ## Fonctionnalités principales
 
 *   **Système d'authentification :** Inscription et connexion des utilisateurs.
-*   **Gestion des équipes :** Création et gestion des équipes.
-*   **Ajout de membres :** Attribution de membres à une équipe.
+*   **Gestion des projets :** Création et gestion des projets.
+*   **Ajout de membres :** Attribution de membres à un projet.
 *   **Gestion des tâches :** Création, modification, suppression et affectation de tâches aux membres de l'équipe.
 *   **Kanban Board :** Visualisation des tâches par état (Todo, Doing, Done).
 
 ## Structure du projet
 
 *   `config/` : Contient les fichiers de configuration.
-*   `data.sql` : Script SQL pour initialiser la base de données.
+*   `init.sql` : Script SQL pour initialiser la base de données.
 *   `database.php` : Connexion à la base de données.
 *   `controllers/` : Contient les scripts PHP qui gèrent la logique de l'application.
 *   `task/` : Contrôleurs pour la gestion des tâches.
@@ -36,7 +36,6 @@ Le projet est structuré selon le modèle MVC (Modèle-Vue-Contrôleur) pour sé
 ### Prérequis
 
 *   **Environnement Laragon :** Assurez-vous que Laragon est installé et configuré sur votre machine.
-*   **Base de données MySQL :** Créez une base de données nommée `TaskFlow`.
 *   **PHP :** Version 7.4 ou supérieure.
 
 ### Installation
@@ -47,13 +46,7 @@ Le projet est structuré selon le modèle MVC (Modèle-Vue-Contrôleur) pour sé
     git clone <url-du-depot> TaskFlow
     ```
 
-2.  Importez la base de données :
-
-    *   Ouvrez phpMyAdmin.
-    *   Créez une nouvelle base de données nommée `TaskFlow`.
-    *   Importez le fichier `config/data.sql`.
-
-3.  Configurez le fichier `database.php` :
+2.  Configurez le fichier `database.php` :
 
     ```php
     define('DB_HOST', 'localhost');
@@ -62,7 +55,7 @@ Le projet est structuré selon le modèle MVC (Modèle-Vue-Contrôleur) pour sé
     define('DB_NAME', 'TaskFlow');
     ```
 
-4.  Configurez le fichier `.htaccess` :
+3.  Configurez le fichier `.htaccess` :
 
     ```apache
     RewriteEngine On
@@ -71,34 +64,37 @@ Le projet est structuré selon le modèle MVC (Modèle-Vue-Contrôleur) pour sé
     RewriteRule ^(.*)$ index.php [QSA,L]
     ```
 
-5. executer la commande (tailwind):
+4. executer la commande (tailwind):
 
     ```bash
    npm start
     ```
 
-6.  Configurez Laragon pour que le dossier `TaskFlow` soit le root, puis accédez à l'application via `http://localhost/`.
+5.  Configurez Laragon pour que le dossier `TaskFlow` soit le root, puis accédez à l'application via `http://localhost/`.
 
 ## Base de données
 
-### Tables principales
+## Tables principales
 
-*   `users` : Stocke les informations des utilisateurs.
-*   `teams` : Stocke les informations des équipes.
-*   `team_member` : Associe les utilisateurs aux équipes.
-*   `tasks` : Contient les tâches.
-*   `task_user` : Associe les utilisateurs aux tâches.
+*   `users` : Stocke les informations des utilisateurs (nom, email, mot de passe, rôle).
+*   `projects` : Contient les projets (nom, description, visibilité, date d'échéance, utilisateur responsable).
+*   `categories` : Stocke les catégories de tâches (par exemple, "Développement", "Design").
+*   `tags` : Stocke les tags associés aux tâches (par exemple, "Urgent", "Frontend").
+*   `tasks` : Contient les tâches à réaliser (titre, description, statut, date d'échéance).
+*   `project_users` : Associe les utilisateurs aux projets.
+*   `task_users` : Associe les utilisateurs aux tâches.
+*   `task_tags` : Associe les tags aux tâches.
 
 ## Utilisation
 
 ### Connexion
 - Créez un compte ou connectez-vous avec vos identifiants.
 
-### Créer une équipe
-- Allez sur la page **"Mes équipes"** et créez une équipe.
+### Créer un projet
+- Allez sur la page **"home"** et créez un projet.
 
 ### Ajouter des membres
-- Ajoutez des membres à votre équipe via l’interface.
+- Ajoutez des membres à votre projet via l’interface.
 
 ### Gérer les tâches
 - Créez une nouvelle tâche.
@@ -107,7 +103,6 @@ Le projet est structuré selon le modèle MVC (Modèle-Vue-Contrôleur) pour sé
 
 ### Suivre les tâches
 - Consultez le tableau **Kanban** pour visualiser l’état des tâches.
-
 ---
 
 ## Contribution
@@ -124,8 +119,6 @@ Le projet est structuré selon le modèle MVC (Modèle-Vue-Contrôleur) pour sé
 ---
 
 ## Support
-Pour toute question ou assistance, veuillez contacter l’équipe de développement via **taskflow@gmail.com**.
+Pour toute question ou assistance, veuillez contacter l’équipe de développement via **ayoubakraou@gmail.com**.
 
----
 
-**Créateurs : Belal Allala et Ayoub Akraou**
