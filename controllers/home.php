@@ -1,4 +1,5 @@
 <?php
+if (! User::isLoggedIn()) header('Location: /login');
 // $projects = Project::getProjects($_SESSION['user_id']);
 $projects = Project::getProjects(1);
 // dd($projects);
