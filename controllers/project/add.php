@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    $due_date = htmlspecialchars($_POST['due_date']);
 
    $newProject = new Project($name, $description, $due_date, $visibility);
-   $success = $newProject->createProject($_SESSION['manager_id']);
+   $success = $newProject->create($_SESSION['manager_id']);
    // dd($_SESSION);
    if ($success) header('Location: /');
 }
