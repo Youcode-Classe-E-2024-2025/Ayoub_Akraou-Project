@@ -43,6 +43,7 @@ CREATE TABLE
     tags (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL UNIQUE,
+        color VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
@@ -157,11 +158,11 @@ VALUES
 
 -- Insert fake data into tags
 INSERT INTO
-    tags (name)
+    tags (name, color)
 VALUES
-    ('Urgent'),
-    ('Frontend'),
-    ('Backend');
+    ('Urgent', '#ff0000'),
+    ('Frontend', '#4ade80'),
+    ('Backend', '#475569');
 
 -- Insert fake data into tasks
 INSERT INTO
