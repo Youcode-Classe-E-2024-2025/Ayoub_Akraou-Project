@@ -6,4 +6,6 @@ elseif ($path === "/signup") require "controllers/signup.php";
 elseif ($path === "/login") require "controllers/login.php";
 elseif ($path === "/logout") require "controllers/logout.php";
 elseif ($path === "/profile") require "controllers/profile.php";
+elseif ($path === "/projects") require "controllers/projects.php";
+elseif ($path === "/project") require "controllers/project.php";
 else require "views/404.php";
