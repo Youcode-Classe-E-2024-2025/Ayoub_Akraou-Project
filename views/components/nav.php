@@ -4,6 +4,9 @@
    </h1>
    <div class="ml-auto flex items-center gap-6">
       <a class="font-semibold  text-white hover:underline <?= checkURL("/") || checkURL("/home") ? "underline" : "" ?>" href="/">home</a>
+      <?php if (User::isLoggedIn() && User::getRole($_SESSION['user_id']) === 'manager') : ?>
+         <a class="font-semibold text-white hover:underline <?= checkURL("/projects") ? "underline" : "" ?>" href="/projects">projects</a>
+      <?php endif ?>
       <?php if (User::isLoggedIn()) : ?>
          <a class="font-semibold text-white hover:underline <?= checkURL("/signup") ? "underline" : "" ?>" href="/logout">logout</a>
       <?php else: ?>

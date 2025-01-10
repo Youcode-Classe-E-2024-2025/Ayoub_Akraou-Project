@@ -5,7 +5,7 @@
       <?php endforeach ?>
    </div>
    <div class="task-header max-w-fit flex items-start gap-3 ml-auto">
-      <button class="edit-task-btn">
+      <button class="update-task-btn">
          <i class="edit-icon fa-regular fa-pen-to-square"></i>
       </button>
       <button class="delete-task-btn">

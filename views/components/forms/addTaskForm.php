@@ -41,7 +41,7 @@
                </select>
             </div>
          </div>
-         <?php $users = Task::getUnassignedUsersForTask($selectedProject, $next_task_id); ?>
+         <?php $users = Project::getMembers($selectedProject); ?>
          <div class="flex gap-2">
             <div class="flex-1">
                <h3 class="block text-sm font-medium text-gray-900">assign to:</h3>

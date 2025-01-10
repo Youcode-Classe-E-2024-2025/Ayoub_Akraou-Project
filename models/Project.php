@@ -15,7 +15,7 @@ class Project
       $this->visibility = $visibility;
       $this->db = new Database();
    }
-   public function createProject($manager_id)
+   public function create($manager_id)
    {
       // creer le projet par un manager
       $query = "INSERT INTO projects (name, description, due_date, visibility, manager_id)
@@ -37,7 +37,7 @@ class Project
 
       return $stmt->rowCount() > 0;
    }
-   public function updateProject($projectId)
+   public function update($projectId)
    {
       $query = "UPDATE projects
                SET name = :name,
@@ -54,14 +54,13 @@ class Project
       ];
       $stmt = $this->db->query($query, $params);
    }
-   public static function deleteProject($projectId)
+   public static function delete($projectId)
    {
       $query = "DELETE FROM projects WHERE id = :id";
       $params = [':id' => $projectId];
       $db = new Database();
       $stmt = $db->query($query, $params);
    }
-
    public static function getProjects($user_id)
    {
       $query = "
@@ -86,9 +85,7 @@ class Project
 
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
    }
-
-
-   public static function getProjectDetails($projectId)
+   public static function getDetails($projectId)
    {
       $query = "SELECT * FROM projects WHERE id = :id";
       $params = ['id' => $projectId];
@@ -103,14 +100,14 @@ class Project
       $db = new Database();
       $db->query($query, $params);
    }
-
-   public static function getMembers($projectId)
+   public static function getMembers($projectId, $without_managers = false)
    {
       $db = new Database();
+      $condition = $without_managers ? 'pu.project_id = :project_id AND u.role != "manager"' : 'pu.project_id = :project_id';
       $query = "SELECT u.id, u.name, u.email
                FROM users u
                JOIN project_users pu ON u.id = pu.user_id
-               WHERE pu.project_id = :project_id";
+               WHERE $condition";
       $params = ['project_id' => $projectId];
       $stmt = $db->query($query, $params);
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -130,7 +127,6 @@ class Project
 
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
    }
-   // Supprimer un membre de tous ses projets
    public static function removeMember($project_id, $user_id)
    {
       $query = "DELETE FROM project_users WHERE project_id = :project_id AND user_id = :user_id";
@@ -145,7 +141,7 @@ class Project
       $db = new Database();
       $stmt = $db->query($query, $params);
       $total = $stmt->fetch()['task_count'];
-
+      $total = $total === 0 ? 1 : $total;
       $query = "SELECT COUNT(*) AS task_count FROM tasks WHERE project_id = :project_id AND status = 'done'";
       $params = ['project_id' => $project_id];
       $db = new Database();

@@ -59,3 +59,4 @@ require "router.php";
 // dd(User::isLoggedIn());
 
 // dd($_SESSION);
+// dd(Task::getTaskDetails(12));

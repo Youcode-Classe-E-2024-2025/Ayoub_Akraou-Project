@@ -8,7 +8,7 @@ class Category
       $this->name = $name;
    }
 
-   public function createCategory()
+   public function create()
    {
       $db = new Database();
       $sql = "INSERT INTO categories (name) VALUES (:name)";
@@ -17,7 +17,7 @@ class Category
       $db->query($sql, $params);
    }
 
-   public function updateCategory($categoryId)
+   public function update($categoryId)
    {
       $db = new Database();
       $sql = "UPDATE categories SET name = :name WHERE id = :id";
@@ -29,7 +29,7 @@ class Category
       return $db->query($sql, $params);
    }
 
-   public static function deleteCategory(int $categoryId)
+   public static function delete(int $categoryId)
    {
       $db = new Database();
       $sql = "DELETE FROM categories WHERE id = :id";

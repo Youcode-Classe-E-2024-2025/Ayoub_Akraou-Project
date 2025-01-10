@@ -28,4 +28,10 @@ class Database
    {
       return $this->connection->lastInsertId();
    }
+   public function lastId($table)
+   {
+      $stmt = $this->query("SHOW TABLE STATUS LIKE :table", ['table' => $table]);
+      $lastId = $stmt->fetch(PDO::FETCH_ASSOC)['Auto_increment'];
+      return $lastId;
+   }
 }

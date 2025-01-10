@@ -67,6 +67,7 @@ class User
       }
 
       $_SESSION['user_id'] = $user['id'];
+      $_SESSION['role'] = $user['role'];
       if ($user['role'] === 'manager') $_SESSION['manager_id'] = $user['id'];
 
       return [
@@ -114,5 +115,18 @@ class User
          'success' => true,
          'body' => $user
       ];
+   }
+   public static function getRole($user_id)
+   {
+      return self::getUserDetails($user_id)['body']['role'];
+   }
+
+   public static function delete($id)
+   {
+      $db = new Database();
+      $query = "DELETE FROM users WHERE id = :id";
+
+      $stmt = $db->query($query, ['id' => $id]);
+      return $stmt->rowCount() > 0;
    }
 }

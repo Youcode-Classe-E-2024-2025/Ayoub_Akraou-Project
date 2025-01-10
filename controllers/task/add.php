@@ -12,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    $due_date = htmlspecialchars($_POST["due_date"]);
    $status = htmlspecialchars($_POST["status"]);
    $category_id = htmlspecialchars($_POST["category"]);
-   $tags = array_map(fn($el) => htmlspecialchars($el), $_POST["tags"]);
-   $collaborators = array_map(fn($el) => htmlspecialchars($el), $_POST["collaborators"]);
+   $tags = array_map(fn($el) => htmlspecialchars($el), isset($_POST["tags"]) ? $_POST["tags"] : []);
+   $collaborators = isset($_POST["collaborators"]) ? array_map(fn($el) => htmlspecialchars($el), $_POST["collaborators"]) : [];
    dd($_SESSION);
    $newTask = new Task($title, $description, $due_date, $status);
-   $newTask->createTask($_SESSION['project_id'], $category_id, $tags, $collaborators);
+   $newTask->create($_SESSION['project_id'], $category_id, $tags, $collaborators);
    header('Location: /');
 }
